@@ -153,6 +153,13 @@
   font-weight: 800;
   flex-shrink: 0;
   border: 2px solid var(--color-text-primary);
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .listInfo {
@@ -214,6 +221,7 @@
   font-weight: 800;
   flex-shrink: 0;
   border: 2px solid var(--color-text-primary);
+  overflow: hidden;
 }
 
 .gridName {
