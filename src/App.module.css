@@ -1,6 +1,8 @@
 .frame {
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  max-width: 390px;
+  height: 100vh;
+  height: 100dvh;
   background: var(--color-bg);
   color: var(--color-text-primary);
   overflow: hidden;
@@ -9,6 +11,9 @@
 
 @media (min-width: 600px) {
   .frame {
+    width: 390px;
+    height: 844px;
+    max-height: calc(100dvh - 48px);
     border-radius: 32px;
     box-shadow: 0 24px 60px rgba(43, 33, 64, 0.25);
     margin: 24px 0;
