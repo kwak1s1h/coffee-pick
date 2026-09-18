@@ -30,11 +30,16 @@ export function useCoffeePick() {
 
     fetchMenu()
       .then((items) => {
-        if (!cancelled) setMenu(items);
+        if (cancelled) return;
+        if (items.length > 0) {
+          setMenu(items);
+        } else {
+          setMenuError('아직 등록된 메뉴가 없습니다.');
+        }
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setMenuError(err instanceof Error ? err.message : '메뉴를 불러오지 못했습니다.');
+          setMenuError(err instanceof Error ? err.message : '메뉴 서버에 연결하지 못했습니다.');
         }
       })
       .finally(() => {
