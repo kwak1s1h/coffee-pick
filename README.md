@@ -31,7 +31,12 @@ npm run preview   # 빌드 결과 미리보기
 
 ## API 연동
 
-메뉴 데이터는 `coffee-pick-api`(`GET /menu`)에서 가져옵니다. `VITE_API_BASE_URL` 환경변수(`.env`, 기본값 `http://localhost:3000`)로 API 서버 주소를 지정하며, 앱 시작 시 `src/hooks/useCoffeePick.ts`가 메뉴를 fetch합니다. API 서버에 연결하지 못하면 `src/data/menu.ts`의 하드코딩된 메뉴로 자동 폴백합니다. 브랜드 목록·필터 옵션(`BRAND_LIST`, `DRINK_OPTIONS`, `PRICE_OPTIONS`)은 아직 클라이언트에 하드코딩되어 있습니다.
+메뉴 데이터는 `coffee-pick-api`(`GET /menu`)에서 가져옵니다. `VITE_API_BASE_URL` 환경변수로 API 서버 주소를 지정하며, 앱 시작 시 `src/hooks/useCoffeePick.ts`가 메뉴를 fetch합니다. API 서버에 연결하지 못하거나 메뉴가 비어 있으면 `src/data/menu.ts`의 하드코딩된 메뉴로 자동 폴백합니다. 브랜드 목록·필터 옵션(`BRAND_LIST`, `DRINK_OPTIONS`, `PRICE_OPTIONS`)은 아직 클라이언트에 하드코딩되어 있습니다.
+
+- 로컬 개발: `.env`(gitignore됨, `.env.example` 참고) → 기본값 `http://localhost:3000`
+- 프로덕션 빌드(GitHub Pages): `.env.production`에 커밋된 값 사용 → `https://cfp-api.devseok.com`
+
+프로덕션 API 서버(`coffee-pick-api`)의 `ALLOWED_ORIGINS`에 배포된 프런트엔드 origin(예: `https://kwak1s1h.github.io`)이 등록되어 있어야 CORS가 정상 동작합니다.
 
 ## 참고
 
