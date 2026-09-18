@@ -16,6 +16,8 @@ interface DrawScreenProps {
 export function DrawScreen({ pick, onNavigate }: DrawScreenProps) {
   const {
     state,
+    menuLoading,
+    menuError,
     draw,
     openFilter,
     closeFilter,
@@ -85,8 +87,12 @@ export function DrawScreen({ pick, onNavigate }: DrawScreenProps) {
           <span className={styles.summary}>{summaryText(state)}</span>
         </div>
 
-        <button type="button" className={styles.drawButton} onClick={draw}>
-          뽑기!
+        {menuError && (
+          <span className={styles.summary}>메뉴 서버에 연결하지 못해 기본 메뉴로 표시 중이에요.</span>
+        )}
+
+        <button type="button" className={styles.drawButton} onClick={draw} disabled={menuLoading}>
+          {menuLoading ? '불러오는 중…' : '뽑기!'}
         </button>
       </div>
 

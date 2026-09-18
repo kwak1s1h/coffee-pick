@@ -1,7 +1,8 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { fetchMenu } from '../api/menu';
 import { MENU } from '../data/menu';
 import { filterExplore } from '../utils/explore';
-import type { AppState, BrandKey, DrinkType, ExploreView } from '../types';
+import type { AppState, BrandKey, DrinkType, ExploreView, MenuItem } from '../types';
 
 const INITIAL_STATE: AppState = {
   screen: 'draw',
@@ -20,6 +21,30 @@ const INITIAL_STATE: AppState = {
 
 export function useCoffeePick() {
   const [state, setState] = useState<AppState>(INITIAL_STATE);
+  const [menu, setMenu] = useState<MenuItem[]>(MENU);
+  const [menuLoading, setMenuLoading] = useState(true);
+  const [menuError, setMenuError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchMenu()
+      .then((items) => {
+        if (!cancelled) setMenu(items);
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setMenuError(err instanceof Error ? err.message : '메뉴를 불러오지 못했습니다.');
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setMenuLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const goDraw = useCallback(() => setState((s) => ({ ...s, screen: 'draw' })), []);
   const goExplore = useCallback(() => setState((s) => ({ ...s, screen: 'explore' })), []);
@@ -72,7 +97,7 @@ export function useCoffeePick() {
 
   const draw = useCallback(() => {
     setState((s) => {
-      const pool = MENU.filter(
+      const pool = menu.filter(
         (item) =>
           (s.drinkType === 'all' || item.type === s.drinkType) &&
           (s.priceLimit === null || item.price <= s.priceLimit) &&
@@ -84,15 +109,18 @@ export function useCoffeePick() {
       const picked = pool[Math.floor(Math.random() * pool.length)];
       return { ...s, pickedItem: picked, noResult: false, screen: 'result' };
     });
-  }, []);
+  }, [menu]);
 
   const exploreItems = useMemo(
-    () => filterExplore(MENU, state.exploreTypeFilter, state.exploreQuery),
-    [state.exploreTypeFilter, state.exploreQuery],
+    () => filterExplore(menu, state.exploreTypeFilter, state.exploreQuery),
+    [menu, state.exploreTypeFilter, state.exploreQuery],
   );
 
   return {
     state,
+    menu,
+    menuLoading,
+    menuError,
     exploreItems,
     goDraw,
     goExplore,
