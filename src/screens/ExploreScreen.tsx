@@ -41,6 +41,7 @@ export function ExploreScreen({ pick, onNavigate }: ExploreScreenProps) {
         priceLabel: `${m.price.toLocaleString('ko-KR')}원`,
         avatarColor: avatarColorFor(m.brand),
         initial: m.brandLabel.slice(0, 1),
+        imageUrl: m.imageUrl,
         typeLabel: TYPE_LABEL[m.type],
         typeBg: TYPE_BG[m.type],
       })),
@@ -150,7 +151,11 @@ export function ExploreScreen({ pick, onNavigate }: ExploreScreenProps) {
           displayItems.map((m) => (
             <div key={m.key} className={styles.listCard}>
               <div className={styles.listAvatar} style={{ background: m.avatarColor }}>
-                {m.initial}
+                {m.imageUrl ? (
+                  <img className={styles.avatarImg} src={m.imageUrl} alt={m.name} />
+                ) : (
+                  m.initial
+                )}
               </div>
               <div className={styles.listInfo}>
                 <span className={styles.listName}>{m.name}</span>
@@ -168,7 +173,11 @@ export function ExploreScreen({ pick, onNavigate }: ExploreScreenProps) {
             {displayItems.map((m) => (
               <div key={m.key} className={styles.gridCard}>
                 <div className={styles.gridAvatar} style={{ background: m.avatarColor }}>
-                  {m.initial}
+                  {m.imageUrl ? (
+                    <img className={styles.avatarImg} src={m.imageUrl} alt={m.name} />
+                  ) : (
+                    m.initial
+                  )}
                 </div>
                 <span className={styles.gridName}>{m.name}</span>
                 <span className={styles.gridMeta}>

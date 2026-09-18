@@ -35,10 +35,14 @@ export function ResultScreen({ pick }: ResultScreenProps) {
             <div>짜잔! 🎉</div>
           </div>
           <div className={styles.pickedBody}>
-            <div className={styles.capsuleSplit}>
-              <div className={styles.capsuleLeft} />
-              <div className={styles.capsuleRight} />
-            </div>
+            {picked.imageUrl ? (
+              <img className={styles.pickedImage} src={picked.imageUrl} alt={picked.name} />
+            ) : (
+              <div className={styles.capsuleSplit}>
+                <div className={styles.capsuleLeft} />
+                <div className={styles.capsuleRight} />
+              </div>
+            )}
             <div className={styles.pickedText}>
               <div className={styles.pickedName}>{picked.name}</div>
               <div className={styles.pickedMeta}>
