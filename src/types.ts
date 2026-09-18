@@ -1,4 +1,6 @@
-export type Screen = 'main' | 'filter' | 'brand' | 'result';
+export type Screen = 'draw' | 'explore' | 'settings' | 'result';
+
+export type ExploreView = 'list' | 'grid';
 
 export type DrinkType = 'all' | 'decaf' | 'smoothie' | 'drink';
 
@@ -38,13 +40,17 @@ export interface PriceOption {
   value: number | null;
 }
 
-export type BrandSelection = Record<BrandKey, boolean>;
-
-export interface CoffeePickState {
+export interface AppState {
   screen: Screen;
+  filterOpen: boolean;
+  exploreFilterOpen: boolean;
   drinkType: DrinkType;
   priceLimit: number | null;
-  brands: BrandSelection;
+  selectedBrand: BrandKey | 'all';
+  exploreTypeFilter: DrinkType;
+  exploreQuery: string;
+  exploreView: ExploreView;
   pickedItem: MenuItem | null;
   noResult: boolean;
+  darkMode: boolean;
 }

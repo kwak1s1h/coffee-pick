@@ -1,8 +1,10 @@
 :root {
   --color-bg: #fff1de;
   --color-text-primary: #2b2140;
-  --color-text-secondary: #5b4f78;
-  --color-text-muted: #8177a0;
+  --color-muted: #5b4f78;
+  --color-card-bg: #ffffff;
+  --color-divider: #f1e9d8;
+
   --color-nav-inactive: #b8afd6;
   --color-accent-coral: #e8483f;
   --color-accent-coral-shadow: #b8352e;
@@ -19,4 +21,12 @@
 
   --font-display: 'Baloo 2', sans-serif;
   --font-body: 'Nunito', sans-serif;
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #160f26;
+  --color-text-primary: #f5f0e6;
+  --color-muted: #b6a9de;
+  --color-card-bg: #241a3b;
+  --color-divider: #3a2e5c;
 }

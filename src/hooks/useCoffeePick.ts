@@ -1,53 +1,74 @@
-import { useCallback, useState } from 'react';
-import { BRAND_LIST, MENU } from '../data/menu';
-import type { BrandKey, CoffeePickState, DrinkType } from '../types';
+import { useCallback, useMemo, useState } from 'react';
+import { MENU } from '../data/menu';
+import { filterExplore } from '../utils/explore';
+import type { AppState, BrandKey, DrinkType, ExploreView } from '../types';
 
-const INITIAL_STATE: CoffeePickState = {
-  screen: 'main',
+const INITIAL_STATE: AppState = {
+  screen: 'draw',
+  filterOpen: false,
+  exploreFilterOpen: false,
   drinkType: 'decaf',
   priceLimit: 5000,
-  brands: {
-    starbucks: true,
-    ediya: true,
-    twosome: true,
-    mega: false,
-    compose: false,
-    paikdabang: false,
-    hollys: false,
-  },
+  selectedBrand: 'all',
+  exploreTypeFilter: 'all',
+  exploreQuery: '',
+  exploreView: 'list',
   pickedItem: null,
   noResult: false,
+  darkMode: false,
 };
 
 export function useCoffeePick() {
-  const [state, setState] = useState<CoffeePickState>(INITIAL_STATE);
+  const [state, setState] = useState<AppState>(INITIAL_STATE);
 
-  const goMain = useCallback(() => setState((s) => ({ ...s, screen: 'main' })), []);
-  const goFilter = useCallback(() => setState((s) => ({ ...s, screen: 'filter' })), []);
-  const goBrand = useCallback(() => setState((s) => ({ ...s, screen: 'brand' })), []);
+  const goDraw = useCallback(() => setState((s) => ({ ...s, screen: 'draw' })), []);
+  const goExplore = useCallback(() => setState((s) => ({ ...s, screen: 'explore' })), []);
+  const goSettings = useCallback(() => setState((s) => ({ ...s, screen: 'settings' })), []);
 
-  const setDrinkType = useCallback((v: DrinkType) => {
-    setState((s) => ({ ...s, drinkType: v }));
-  }, []);
+  const openFilter = useCallback(() => setState((s) => ({ ...s, filterOpen: true })), []);
+  const closeFilter = useCallback(() => setState((s) => ({ ...s, filterOpen: false })), []);
+  const resetFilter = useCallback(
+    () => setState((s) => ({ ...s, drinkType: 'all', priceLimit: null })),
+    [],
+  );
 
-  const setPriceLimit = useCallback((v: number | null) => {
-    setState((s) => ({ ...s, priceLimit: v }));
-  }, []);
+  const openExploreFilter = useCallback(
+    () => setState((s) => ({ ...s, exploreFilterOpen: true })),
+    [],
+  );
+  const closeExploreFilter = useCallback(
+    () => setState((s) => ({ ...s, exploreFilterOpen: false })),
+    [],
+  );
+  const resetExploreFilter = useCallback(
+    () => setState((s) => ({ ...s, exploreTypeFilter: 'all' })),
+    [],
+  );
 
-  const toggleBrand = useCallback((key: BrandKey) => {
-    setState((s) => ({ ...s, brands: { ...s.brands, [key]: !s.brands[key] } }));
-  }, []);
+  const setDrinkType = useCallback((v: DrinkType) => setState((s) => ({ ...s, drinkType: v })), []);
+  const setPriceLimit = useCallback(
+    (v: number | null) => setState((s) => ({ ...s, priceLimit: v })),
+    [],
+  );
+  const setSelectedBrand = useCallback(
+    (v: BrandKey | 'all') => setState((s) => ({ ...s, selectedBrand: v })),
+    [],
+  );
 
-  const toggleAllBrands = useCallback(() => {
-    setState((s) => {
-      const allOn = BRAND_LIST.every((b) => s.brands[b.key]);
-      const next = { ...s.brands };
-      BRAND_LIST.forEach((b) => {
-        next[b.key] = !allOn;
-      });
-      return { ...s, brands: next };
-    });
-  }, []);
+  const setExploreView = useCallback(
+    (v: ExploreView) => setState((s) => ({ ...s, exploreView: v })),
+    [],
+  );
+  const setExploreQuery = useCallback(
+    (v: string) => setState((s) => ({ ...s, exploreQuery: v })),
+    [],
+  );
+  const setExploreTypeFilter = useCallback(
+    (v: DrinkType) => setState((s) => ({ ...s, exploreTypeFilter: v })),
+    [],
+  );
+
+  const toggleDarkMode = useCallback(() => setState((s) => ({ ...s, darkMode: !s.darkMode })), []);
 
   const draw = useCallback(() => {
     setState((s) => {
@@ -55,7 +76,7 @@ export function useCoffeePick() {
         (item) =>
           (s.drinkType === 'all' || item.type === s.drinkType) &&
           (s.priceLimit === null || item.price <= s.priceLimit) &&
-          s.brands[item.brand],
+          (s.selectedBrand === 'all' || item.brand === s.selectedBrand),
       );
       if (pool.length === 0) {
         return { ...s, pickedItem: null, noResult: true, screen: 'result' };
@@ -65,15 +86,30 @@ export function useCoffeePick() {
     });
   }, []);
 
+  const exploreItems = useMemo(
+    () => filterExplore(MENU, state.exploreTypeFilter, state.exploreQuery),
+    [state.exploreTypeFilter, state.exploreQuery],
+  );
+
   return {
     state,
-    goMain,
-    goFilter,
-    goBrand,
+    exploreItems,
+    goDraw,
+    goExplore,
+    goSettings,
+    openFilter,
+    closeFilter,
+    resetFilter,
+    openExploreFilter,
+    closeExploreFilter,
+    resetExploreFilter,
     setDrinkType,
     setPriceLimit,
-    toggleBrand,
-    toggleAllBrands,
+    setSelectedBrand,
+    setExploreView,
+    setExploreQuery,
+    setExploreTypeFilter,
+    toggleDarkMode,
     draw,
   };
 }

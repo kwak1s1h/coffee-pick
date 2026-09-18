@@ -10,7 +10,7 @@ interface ResultScreenProps {
 }
 
 export function ResultScreen({ pick }: ResultScreenProps) {
-  const { state, goMain, draw } = pick;
+  const { state, goDraw, draw } = pick;
   const picked = state.pickedItem;
   const hasPicked = !!picked;
 
@@ -22,7 +22,7 @@ export function ResultScreen({ pick }: ResultScreenProps) {
       <div className={styles.dotPurple} />
 
       <div className={styles.closeRow}>
-        <IconButton onClick={goMain} ariaLabel="닫기">
+        <IconButton onClick={goDraw} ariaLabel="닫기">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth={2.2}>
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -63,7 +63,7 @@ export function ResultScreen({ pick }: ResultScreenProps) {
 
       <div className={styles.footer}>
         {hasPicked && (
-          <button type="button" className={styles.decideButton} onClick={goMain}>
+          <button type="button" className={styles.decideButton} onClick={goDraw}>
             이 메뉴로 결정!
           </button>
         )}
