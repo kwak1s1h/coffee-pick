@@ -1,4 +1,4 @@
-import type { Brand, DrinkOption, MenuItem, PriceOption } from '../types';
+import type { Brand, BrandKey, DrinkOption, MenuItem, PriceOption } from '../types';
 
 export const MENU: MenuItem[] = [
   { name: '아메리카노', brand: 'starbucks', brandLabel: '스타벅스', price: 4500, type: 'drink', desc: '깔끔하고 진한 에스프레소 베이스의 기본 커피.', tags: ['카페인'] },
@@ -15,6 +15,12 @@ export const MENU: MenuItem[] = [
   { name: '에스프레소', brand: 'hollys', brandLabel: '할리스', price: 3200, type: 'drink', desc: '깊고 진한 풍미의 순수한 에스프레소 샷.', tags: ['카페인'] },
 ];
 
+/**
+ * `useCoffeePick`이 GET /brands를 부르기 전까지 쓰는 초기값이자, 실패했을 때
+ * 폴백으로 남는 값이다(`MENU`가 `fetchMenu` 앞에서 하는 역할과 동일). label은
+ * API가 내려주는 값으로 갱신되지만, API에는 없는 UI 전용 값인 color는 아래
+ * BRAND_COLORS에서 항상 이 배열 기준으로 붙는다.
+ */
 export const BRAND_LIST: Brand[] = [
   { key: 'starbucks', label: '스타벅스', color: '#1FAE79' },
   { key: 'ediya', label: '이디야커피', color: '#E8483F' },
@@ -24,6 +30,12 @@ export const BRAND_LIST: Brand[] = [
   { key: 'paikdabang', label: '빽다방', color: '#B8352E' },
   { key: 'hollys', label: '할리스', color: '#1B6FA8' },
 ];
+
+export const DEFAULT_BRAND_COLOR = '#2B2140';
+
+export const BRAND_COLORS: Partial<Record<BrandKey, string>> = Object.fromEntries(
+  BRAND_LIST.map((b) => [b.key, b.color]),
+);
 
 export const DRINK_OPTIONS: DrinkOption[] = [
   { key: 'all', label: '전체' },

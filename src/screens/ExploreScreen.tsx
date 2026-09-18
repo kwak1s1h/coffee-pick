@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { BottomNav } from '../components/BottomNav';
 import { FilterSheet } from '../components/FilterSheet';
-import { BRAND_LIST, DRINK_OPTIONS, TYPE_BG, TYPE_LABEL } from '../data/menu';
+import { DEFAULT_BRAND_COLOR, DRINK_OPTIONS, TYPE_BG, TYPE_LABEL } from '../data/menu';
 import type { useCoffeePick } from '../hooks/useCoffeePick';
-import type { Screen } from '../types';
+import type { Brand, Screen } from '../types';
 import styles from './ExploreScreen.module.css';
 
 type CoffeePick = ReturnType<typeof useCoffeePick>;
@@ -13,13 +13,14 @@ interface ExploreScreenProps {
   onNavigate: (screen: Screen) => void;
 }
 
-function avatarColorFor(brand: string): string {
-  return BRAND_LIST.find((b) => b.key === brand)?.color ?? '#2B2140';
+function avatarColorFor(brands: Brand[], brand: string): string {
+  return brands.find((b) => b.key === brand)?.color ?? DEFAULT_BRAND_COLOR;
 }
 
 export function ExploreScreen({ pick, onNavigate }: ExploreScreenProps) {
   const {
     state,
+    brands,
     exploreItems,
     setExploreView,
     setExploreQuery,
@@ -39,13 +40,13 @@ export function ExploreScreen({ pick, onNavigate }: ExploreScreenProps) {
         name: m.name,
         brandLabel: m.brandLabel,
         priceLabel: `${m.price.toLocaleString('ko-KR')}원`,
-        avatarColor: avatarColorFor(m.brand),
+        avatarColor: avatarColorFor(brands, m.brand),
         initial: m.brandLabel.slice(0, 1),
         imageUrl: m.imageUrl,
         typeLabel: TYPE_LABEL[m.type],
         typeBg: TYPE_BG[m.type],
       })),
-    [exploreItems],
+    [exploreItems, brands],
   );
 
   return (

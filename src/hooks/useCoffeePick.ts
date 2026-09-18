@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { fetchBrands } from '../api/brands';
 import { fetchMenu } from '../api/menu';
-import { MENU } from '../data/menu';
+import { BRAND_COLORS, BRAND_LIST, DEFAULT_BRAND_COLOR, MENU } from '../data/menu';
 import { filterExplore } from '../utils/explore';
-import type { AppState, BrandKey, DrinkType, ExploreView, MenuItem } from '../types';
+import type { AppState, Brand, BrandKey, DrinkType, ExploreView, MenuItem } from '../types';
 
 const INITIAL_STATE: AppState = {
   screen: 'draw',
@@ -24,6 +25,7 @@ export function useCoffeePick() {
   const [menu, setMenu] = useState<MenuItem[]>(MENU);
   const [menuLoading, setMenuLoading] = useState(true);
   const [menuError, setMenuError] = useState<string | null>(null);
+  const [brands, setBrands] = useState<Brand[]>(BRAND_LIST);
 
   useEffect(() => {
     let cancelled = false;
@@ -45,6 +47,26 @@ export function useCoffeePick() {
       .finally(() => {
         if (!cancelled) setMenuLoading(false);
       });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // color는 API에 없는 UI 전용 값이라 로컬 BRAND_COLORS에서 붙인다. 실패하면
+    // 조용히 BRAND_LIST(초기값) 그대로 둔다 — 메뉴 쪽 menuError 배너가 이미
+    // 같은 근본 원인(API 연결 실패)을 알려주므로 별도 에러 상태를 두지 않는다.
+    fetchBrands()
+      .then((items) => {
+        if (cancelled || items.length === 0) return;
+        setBrands(
+          items.map((b) => ({ ...b, color: BRAND_COLORS[b.key] ?? DEFAULT_BRAND_COLOR })),
+        );
+      })
+      .catch(() => undefined);
 
     return () => {
       cancelled = true;
@@ -126,6 +148,7 @@ export function useCoffeePick() {
     menu,
     menuLoading,
     menuError,
+    brands,
     exploreItems,
     goDraw,
     goExplore,

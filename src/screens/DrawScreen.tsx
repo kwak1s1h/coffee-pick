@@ -1,6 +1,6 @@
 import { BottomNav } from '../components/BottomNav';
 import { FilterSheet } from '../components/FilterSheet';
-import { BRAND_LIST, DRINK_OPTIONS, PRICE_OPTIONS } from '../data/menu';
+import { DRINK_OPTIONS, PRICE_OPTIONS } from '../data/menu';
 import { activeFilterCount, summaryText } from '../utils/summary';
 import type { useCoffeePick } from '../hooks/useCoffeePick';
 import type { Screen } from '../types';
@@ -18,6 +18,7 @@ export function DrawScreen({ pick, onNavigate }: DrawScreenProps) {
     state,
     menuLoading,
     menuError,
+    brands,
     draw,
     openFilter,
     closeFilter,
@@ -57,7 +58,7 @@ export function DrawScreen({ pick, onNavigate }: DrawScreenProps) {
                 onChange={(e) => setSelectedBrand(e.target.value as typeof state.selectedBrand)}
               >
                 <option value="all">전체 브랜드</option>
-                {BRAND_LIST.map((b) => (
+                {brands.map((b) => (
                   <option key={b.key} value={b.key}>
                     {b.label}
                   </option>
@@ -84,7 +85,7 @@ export function DrawScreen({ pick, onNavigate }: DrawScreenProps) {
             고급 필터
             {filterCount > 0 && <span className={styles.filterBadge}>{filterCount}</span>}
           </button>
-          <span className={styles.summary}>{summaryText(state)}</span>
+          <span className={styles.summary}>{summaryText(state, brands)}</span>
         </div>
 
         {menuError && <span className={styles.summary}>{menuError} (기본 메뉴로 표시 중)</span>}
