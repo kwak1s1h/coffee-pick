@@ -1,0 +1,259 @@
+.screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 30px 24px 2px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.count {
+  font-size: 13px;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.viewToggle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--color-surface-dark);
+  border-radius: 14px;
+  padding: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.viewButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchRow {
+  padding: 6px 20px 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.searchLabel {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.searchLabel span {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-muted);
+}
+
+.searchInputWrap {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px 12px 38px;
+  border-radius: 16px;
+  border: 3px solid var(--color-text-primary);
+  background: var(--color-card-bg);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.filterIconButton {
+  flex-shrink: 0;
+  width: 47px;
+  height: 47px;
+  border-radius: 16px;
+  border: 3px solid var(--color-text-primary);
+  background: var(--color-card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.filterDot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent-coral);
+  border: 2px solid var(--color-bg);
+}
+
+.results {
+  padding: 8px 20px 4px;
+  overflow-y: auto;
+  flex-grow: 1;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+
+.listCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 18px;
+  margin-bottom: 10px;
+  background: var(--color-card-bg);
+  border: 3px solid var(--color-text-primary);
+}
+
+.listAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  flex-shrink: 0;
+  border: 2px solid var(--color-text-primary);
+}
+
+.listInfo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.listName {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.listMeta {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.typeTag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #2b2140;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding-bottom: 4px;
+}
+
+.gridCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 16px 10px;
+  border-radius: 18px;
+  background: var(--color-card-bg);
+  border: 3px solid var(--color-text-primary);
+}
+
+.gridAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+  border: 2px solid var(--color-text-primary);
+}
+
+.gridName {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.gridMeta {
+  font-size: 11px;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.gridTypeTag {
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: #2b2140;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.emptyHint {
+  font-size: 13px;
+  color: var(--color-muted);
+  font-weight: 700;
+}

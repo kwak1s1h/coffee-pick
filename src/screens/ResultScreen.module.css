@@ -129,7 +129,7 @@
 
 .pickedMeta {
   font-size: 15px;
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   font-weight: 700;
 }
 
@@ -160,7 +160,7 @@
 
 .noResultHint {
   font-size: 14px;
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   font-weight: 700;
 }
 

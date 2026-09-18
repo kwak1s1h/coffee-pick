@@ -38,3 +38,15 @@ export const PRICE_OPTIONS: PriceOption[] = [
   { key: 'p5000', label: '5,000원 이하', value: 5000 },
   { key: 'p7000', label: '7,000원 이하', value: 7000 },
 ];
+
+export const TYPE_LABEL: Record<MenuItem['type'], string> = {
+  drink: '음료',
+  decaf: '디카페인',
+  smoothie: '스무디',
+};
+
+export const TYPE_BG: Record<MenuItem['type'], string> = {
+  drink: '#FFC93C',
+  decaf: '#3DDC97',
+  smoothie: '#7C6CF6',
+};

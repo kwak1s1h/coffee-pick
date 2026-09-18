@@ -16,7 +16,7 @@ export function FilterChip({ label, selected, accentColor, onClick }: FilterChip
       className={styles.chip}
       onClick={onClick}
       style={{
-        background: selected ? accentColor : 'var(--color-white)',
+        background: selected ? accentColor : 'var(--color-card-bg)',
         color: selected ? 'var(--color-white)' : 'var(--color-text-primary)',
         borderColor: selected ? accentColor : 'var(--color-text-primary)',
       }}
