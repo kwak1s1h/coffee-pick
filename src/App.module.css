@@ -1,0 +1,16 @@
+.frame {
+  width: 390px;
+  height: 844px;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 600px) {
+  .frame {
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(43, 33, 64, 0.25);
+    margin: 24px 0;
+  }
+}
