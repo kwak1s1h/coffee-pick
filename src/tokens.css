@@ -1,0 +1,22 @@
+:root {
+  --color-bg: #fff1de;
+  --color-text-primary: #2b2140;
+  --color-text-secondary: #5b4f78;
+  --color-text-muted: #8177a0;
+  --color-nav-inactive: #b8afd6;
+  --color-accent-coral: #e8483f;
+  --color-accent-coral-shadow: #b8352e;
+  --color-accent-mint: #1fae79;
+  --color-accent-purple: #5b4bc4;
+  --color-accent-purple-shadow: #423490;
+  --color-switch-off: #e4dcc8;
+  --color-surface-dark: #2b2140;
+  --color-white: #ffffff;
+  --color-deco-red: #ff6b6b;
+  --color-deco-yellow: #ffc93c;
+  --color-deco-mint-bright: #3ddc97;
+  --color-deco-purple-bright: #7c6cf6;
+
+  --font-display: 'Baloo 2', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+}
