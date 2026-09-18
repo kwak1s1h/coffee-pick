@@ -14,6 +14,7 @@ export type BrandKey =
   | 'hollys';
 
 export interface MenuItem {
+  id?: string;
   name: string;
   brand: BrandKey;
   brandLabel: string;
@@ -21,6 +22,7 @@ export interface MenuItem {
   type: 'drink' | 'decaf' | 'smoothie';
   desc: string;
   tags: string[];
+  imageUrl?: string | null;
 }
 
 export interface Brand {

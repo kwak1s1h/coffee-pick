@@ -20,6 +20,7 @@
 
 ```bash
 npm install
+cp .env.example .env  # API 서버 주소 설정 (기본값 http://localhost:3000)
 npm run dev       # 개발 서버
 npm run build     # 타입체크 + 프로덕션 빌드
 npm run lint      # oxlint
@@ -28,6 +29,10 @@ npm run preview   # 빌드 결과 미리보기
 
 기준 프레임은 모바일 390×844px이며, 600px 이상 뷰포트에서는 폰 프레임 카드를 화면 중앙에 배치합니다.
 
+## API 연동
+
+메뉴 데이터는 `coffee-pick-api`(`GET /menu`)에서 가져옵니다. `VITE_API_BASE_URL` 환경변수(`.env`, 기본값 `http://localhost:3000`)로 API 서버 주소를 지정하며, 앱 시작 시 `src/hooks/useCoffeePick.ts`가 메뉴를 fetch합니다. API 서버에 연결하지 못하면 `src/data/menu.ts`의 하드코딩된 메뉴로 자동 폴백합니다. 브랜드 목록·필터 옵션(`BRAND_LIST`, `DRINK_OPTIONS`, `PRICE_OPTIONS`)은 아직 클라이언트에 하드코딩되어 있습니다.
+
 ## 참고
 
-메뉴/브랜드 데이터는 현재 클라이언트에 하드코딩되어 있습니다(`src/data/menu.ts`). 실제 메뉴 연동, "이 메뉴로 결정!" 동작 확정, 다크 모드 선호도 영속화, 뽑기용 고급 필터와 탐색용 메뉴 필터의 상태 통합 여부 등은 핸드오프 스펙의 Open Questions 항목으로 남아 있어 이후 논의가 필요합니다.
+"이 메뉴로 결정!" 동작 확정, 다크 모드 선호도 영속화, 뽑기용 고급 필터와 탐색용 메뉴 필터의 상태 통합 여부 등은 핸드오프 스펙의 Open Questions 항목으로 남아 있어 이후 논의가 필요합니다.
